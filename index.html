@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090d16">
+  <title>Technex | Tasks & Offers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="config.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="#"><span class="brand-mark">T</span><span>TECHNEX<span class="muted"> / HUB</span></span></a>
+  <nav><a href="#offers">Tasks & Offers</a><a href="#downloads">Downloads</a></nav>
+  <button id="adminOpen" class="btn btn-ghost">Admin Login</button>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow"><span class="live-dot"></span> COMMUNITY PROJECT HUB</div>
+    <h1>Discover. Complete.<br><span class="gradient">Get rewarded.</span></h1>
+    <p class="hero-copy">Explore useful software, community tasks and featured offers — all in one place.</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="#offers">Explore offers <span>↘</span></a><a class="btn btn-ghost" href="#downloads">Browse downloads</a></div>
+    <div class="hero-stats"><div><strong id="offerCount">0</strong><span>ACTIVE OFFERS</span></div><div><strong>LIVE</strong><span>UPDATES</span></div><div><strong>24/7</strong><span>ACCESS</span></div></div>
+    <div class="orb orb-one"></div><div class="orb orb-two"></div>
+  </section>
+  <section id="downloads" class="section">
+    <div class="section-heading"><div><div class="eyebrow">FEATURED DOWNLOAD</div><h2>Tools worth having.</h2></div><span class="section-note">Curated software</span></div>
+    <article class="download-card">
+      <div class="app-icon">W</div><div class="download-info"><div class="tag">OFFICE SUITE</div><h3>WPS Office</h3><p>Writer, spreadsheets, presentations and PDF tools in one office suite.</p><span class="safe-note">↗ Official publisher download</span></div>
+      <a class="btn btn-primary" href="https://www.wps.com/download/" target="_blank" rel="noopener noreferrer">Download WPS Office ↗</a>
+    </article>
+  </section>
+  <section id="offers" class="section offers-section">
+    <div class="section-heading"><div><div class="eyebrow">FRESH FROM THE COMMUNITY</div><h2>Tasks & offers</h2><p class="subcopy">New items appear automatically when the admin publishes them.</p></div><button id="refreshBtn" class="btn btn-ghost">↻ Refresh</button></div>
+    <div class="toolbar"><label class="searchbox"><span>⌕</span><input id="searchInput" placeholder="Search tasks, offers..." aria-label="Search tasks and offers"></label><div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="task">Tasks</button><button class="filter" data-filter="offer">Offers</button></div></div>
+    <div id="status" class="status">Loading published offers…</div><div id="offerGrid" class="offer-grid"></div>
+  </section>
+  <section class="bottom-cta"><div><div class="eyebrow">BUILT FOR THE COMMUNITY</div><h2>Something useful, every visit.</h2><p>Check back for new tasks, tools and offers.</p></div><a class="btn btn-primary" href="#offers">View latest ↗</a></section>
+</main>
+<footer><a class="brand" href="#"><span class="brand-mark small">T</span><span>TECHNEX<span class="muted"> / HUB</span></span></a><span>© <span id="year"></span> Technex. Community project hub.</span></footer>
+
+<div id="adminModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal-backdrop" data-close></div><div class="modal-panel">
+  <button class="modal-x" data-close aria-label="Close">×</button><div class="eyebrow">RESTRICTED AREA</div><h2 id="modalTitle">Admin workspace</h2>
+  <div id="loginPane"><p class="subcopy">Sign in with the admin account created in Supabase Auth.</p>
+   <form id="loginForm"><label>Email<input id="adminEmail" type="email" autocomplete="username" required></label><label>Password<input id="adminPassword" type="password" autocomplete="current-password" required></label><button class="btn btn-primary full" type="submit">Sign in securely</button></form><p id="loginMessage" class="form-message"></p>
+  </div>
+  <div id="dashboardPane" class="hidden">
+   <div class="admin-top"><p>Signed in as <strong id="adminUser"></strong></p><button id="logoutBtn" class="btn btn-ghost">Sign out</button></div>
+   <form id="offerForm" class="admin-form">
+    <input id="editId" type="hidden">
+    <label>Title<input id="offerTitle" maxlength="120" required placeholder="e.g. Join our community"></label>
+    <div class="form-row"><label>Type<select id="offerType"><option value="task">Task</option><option value="offer">Offer</option></select></label><label>Reward / label<input id="offerReward" maxlength="80" placeholder="e.g. 20 points (optional)"></label></div>
+    <label>Description<textarea id="offerDescription" rows="3" maxlength="1000" required placeholder="Explain what visitors should know…"></textarea></label>
+    <label>Destination URL (optional)<input id="offerUrl" type="url" placeholder="https://example.com"></label>
+    <div class="form-row"><label>Status<select id="offerStatus"><option value="published">Published</option><option value="draft">Draft</option></select></label><label>Button label<input id="offerButton" maxlength="40" value="View details"></label></div>
+    <div class="form-actions"><button class="btn btn-primary" type="submit" id="saveOffer">Publish item</button><button class="btn btn-ghost hidden" type="button" id="cancelEdit">Cancel edit</button></div><p id="adminMessage" class="form-message"></p>
+   </form><div class="admin-list-head"><h3>Your items</h3><span>Manage published items and drafts</span></div><div id="adminList" class="admin-list"></div>
+  </div>
+ </div>
+</div>
+<div id="toast" class="toast" role="status"></div>
+</body></html>
